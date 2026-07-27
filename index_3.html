@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fincas del Canal — Casas y terrenos en Frómista, Palencia</title>
+<meta name="description" content="Casas y terrenos en venta en Frómista, Palencia. Junto al Canal de Castilla y el Camino de Santiago.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#EDE4D3;
+    --ink:#2A2620;
+    --canal:#3E5C52;
+    --wheat:#C9A227;
+    --brick:#A85C3D;
+    --stone:#8B8175;
+    --cream-alt:#E2D6BE;
+    --radius:4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Archivo', sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    margin:0 0 0.3em 0;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'JetBrains Mono', monospace; letter-spacing:0.02em;}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+
+  /* Header */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.1rem 2rem;
+    background:rgba(237,228,211,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(42,38,32,0.12);
+  }
+  .brand{display:flex; align-items:center; gap:0.6rem;}
+  .brand-mark{
+    width:28px; height:28px;
+    background:
+      linear-gradient(var(--canal),var(--canal)) center/100% 2px no-repeat,
+      linear-gradient(90deg, transparent 45%, var(--wheat) 45%, var(--wheat) 55%, transparent 55%);
+  }
+  .brand-name{font-family:'Newsreader', serif; font-size:1.2rem; font-weight:600;}
+  nav a{
+    margin-left:1.6rem; text-decoration:none; font-size:0.92rem;
+    color:var(--ink); border-bottom:1px solid transparent; padding-bottom:2px;
+  }
+  nav a:hover{border-bottom-color:var(--brick);}
+
+  /* Hero */
+  .hero{
+    position:relative;
+    padding:5rem 2rem 6rem;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at top right, rgba(62,92,82,0.14), transparent 55%),
+      var(--cream);
+  }
+  .hero-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--brick); margin-bottom:1rem; display:block;
+  }
+  .hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.6rem);
+    max-width:14ch;
+    color:var(--ink);
+  }
+  .hero p{
+    max-width:46ch; font-size:1.05rem; color:var(--ink); opacity:0.82;
+    margin-top:1rem;
+  }
+  .hero-canal-line{
+    margin-top:3rem; height:2px; width:100%;
+    background:repeating-linear-gradient(90deg, var(--canal), var(--canal) 18px, transparent 18px, transparent 26px);
+    opacity:0.55;
+  }
+
+  /* Pueblo — one-pager de presentación */
+  .pueblo-section{padding:1rem 2rem 2rem;}
+  .pueblo-intro{max-width:620px;}
+  .pueblo-intro p{opacity:0.85; font-size:1rem;}
+  .facts-strip{
+    display:flex; flex-wrap:wrap; gap:0 2.6rem;
+    margin:2rem 0 3.5rem;
+    padding:1.1rem 0;
+    border-top:1px solid rgba(42,38,32,0.18);
+    border-bottom:1px solid rgba(42,38,32,0.18);
+  }
+  .facts-strip div{padding:0.5rem 0;}
+  .facts-strip .fact-label{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--stone);
+  }
+  .facts-strip .fact-value{
+    font-family:'Newsreader', serif; font-size:1.15rem; margin-top:0.15rem; color:var(--ink);
+  }
+  .pueblo-row{
+    display:grid; grid-template-columns:1fr 1fr; gap:2.8rem;
+    align-items:center; margin-bottom:4.5rem;
+  }
+  .pueblo-row.reverse .pueblo-img{order:2;}
+  .pueblo-row.reverse .pueblo-text{order:1;}
+  .pueblo-img img{
+    width:100%; aspect-ratio:4/3; object-fit:cover;
+    border-radius:2px; background:var(--stone);
+  }
+  .photo-credit{
+    display:block; margin-top:0.4rem;
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem;
+    color:var(--stone); opacity:0.8;
+  }
+  .pueblo-text .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:0.75rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--brick);
+  }
+  .pueblo-text h3{font-size:1.7rem; margin-top:0.4rem;}
+  .pueblo-text p{opacity:0.85; font-size:0.98rem;}
+  @media (max-width:760px){
+    .pueblo-row, .pueblo-row.reverse{grid-template-columns:1fr;}
+    .pueblo-row.reverse .pueblo-img, .pueblo-row.reverse .pueblo-text{order:initial;}
+  }
+  .pueblo-quote{
+    text-align:center; max-width:640px; margin:0 auto 4.5rem;
+    font-family:'Newsreader', serif; font-style:italic;
+    font-size:clamp(1.3rem, 2.6vw, 1.7rem); color:var(--canal);
+    padding:2.5rem 1rem; border-top:2px solid var(--canal); border-bottom:2px solid var(--canal);
+  }
+  .pueblo-cta{text-align:center; margin-bottom:1rem;}
+
+  /* Route strip = signature element */
+  .route-section{padding:3.5rem 2rem 1rem;}
+  .route-section .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:0.75rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--stone);
+  }
+  .route-strip{
+    position:relative;
+    margin:2.2rem 0 3rem;
+    padding-top:1.4rem;
+    border-top:2px solid var(--ink);
+  }
+  .route-strip::before{
+    content:"IGLESIA DE SAN MARTÍN — KM 0";
+    position:absolute; top:-0.85rem; left:0;
+    background:var(--cream);
+    padding-right:0.6rem;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.7rem; letter-spacing:0.05em; color:var(--canal);
+  }
+  .route-scroll{
+    display:flex; gap:0; overflow-x:auto; padding-bottom:0.5rem;
+  }
+
+  /* Cards */
+  .cards-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+    gap:1.6rem;
+    padding:0 2rem 4rem;
+  }
+  .card{
+    background:var(--cream-alt);
+    border:1px solid rgba(42,38,32,0.14);
+    border-radius:var(--radius);
+    overflow:hidden;
+    cursor:pointer;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover{transform:translateY(-3px); box-shadow:0 10px 24px rgba(42,38,32,0.14);}
+  .card-photo{
+    aspect-ratio:4/3; width:100%; object-fit:cover;
+    background:var(--stone);
+  }
+  .card-body{padding:1.1rem 1.2rem 1.3rem;}
+  .card-km{
+    font-family:'JetBrains Mono', monospace; font-size:0.7rem;
+    color:var(--canal); text-transform:uppercase; letter-spacing:0.05em;
+  }
+  .card-title{font-size:1.15rem; margin-top:0.3rem;}
+  .card-meta{
+    display:flex; gap:0.9rem; margin-top:0.6rem;
+    font-family:'JetBrains Mono', monospace; font-size:0.8rem; color:var(--stone);
+  }
+  .card-price{
+    margin-top:0.8rem; font-family:'JetBrains Mono', monospace;
+    font-size:1.05rem; color:var(--brick); font-weight:500;
+  }
+  .tag{
+    display:inline-block; font-size:0.68rem; letter-spacing:0.06em;
+    text-transform:uppercase; padding:0.2rem 0.5rem;
+    border:1px solid var(--ink); border-radius:2px; margin-bottom:0.5rem;
+  }
+
+  /* Modal detail */
+  .modal{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(42,38,32,0.55);
+    display:flex; align-items:flex-start; justify-content:center;
+    padding:3rem 1.2rem; overflow-y:auto;
+  }
+  .modal.hidden{display:none;}
+  .modal-card{
+    background:var(--cream); max-width:780px; width:100%;
+    border-radius:var(--radius); padding:2rem;
+    position:relative;
+  }
+  .modal-close{
+    position:absolute; top:1.2rem; right:1.4rem;
+    background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--ink);
+    font-family:'JetBrains Mono', monospace;
+  }
+  .gallery{display:flex; gap:0.6rem; overflow-x:auto; margin:1.2rem 0;}
+  .gallery img{width:180px; height:130px; object-fit:cover; border-radius:2px; flex-shrink:0;}
+  .modal-map{width:100%; height:260px; border:0; border-radius:2px; margin-top:1rem; filter:grayscale(0.15);}
+  .modal-specs{display:flex; gap:1.4rem; margin:1rem 0; flex-wrap:wrap;}
+  .modal-specs div{font-family:'JetBrains Mono', monospace; font-size:0.85rem; color:var(--stone);}
+  .modal-specs span{display:block; color:var(--ink); font-size:1rem;}
+  .btn{
+    display:inline-block; margin-top:1.4rem; padding:0.75rem 1.4rem;
+    background:var(--canal); color:var(--cream); text-decoration:none;
+    border:none; border-radius:2px; font-family:'Archivo', sans-serif;
+    font-size:0.92rem; cursor:pointer;
+  }
+  .btn:hover{background:var(--ink);}
+  .btn-outline{
+    background:none; border:1px solid var(--ink); color:var(--ink);
+  }
+  .btn-outline:hover{background:var(--ink); color:var(--cream);}
+
+  /* Contact */
+  .contact{
+    padding:4.5rem 2rem 5rem;
+    background:var(--ink); color:var(--cream);
+  }
+  .contact h2{color:var(--cream);}
+  .contact-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:3rem;
+    max-width:1000px; margin:2rem auto 0;
+  }
+  @media (max-width:760px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-grid form{display:flex; flex-direction:column; gap:0.9rem;}
+  .contact-grid input, .contact-grid textarea{
+    background:rgba(237,228,211,0.08);
+    border:1px solid rgba(237,228,211,0.3);
+    color:var(--cream);
+    padding:0.75rem; border-radius:2px; font-family:'Archivo', sans-serif; font-size:0.95rem;
+  }
+  .contact-grid input::placeholder, .contact-grid textarea::placeholder{color:rgba(237,228,211,0.55);}
+  .direct-contact{border-left:1px solid rgba(237,228,211,0.25); padding-left:2rem;}
+  .direct-contact a{
+    display:block; margin-bottom:0.9rem; text-decoration:none;
+    font-family:'JetBrains Mono', monospace; font-size:0.92rem;
+    padding:0.6rem 0; border-bottom:1px solid rgba(237,228,211,0.15);
+  }
+  .form-status{font-size:0.85rem; min-height:1.2em; color:var(--wheat);}
+
+  footer{
+    padding:1.6rem 2rem; text-align:center;
+    font-size:0.8rem; color:var(--stone);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .card{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <span class="brand-name">Fincas del Canal</span>
+  </div>
+  <nav>
+    <a href="#pueblo">El pueblo</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <span class="hero-eyebrow">Frómista · Palencia · Tierra de Campos</span>
+  <h1>Casas y fincas junto al Canal de Castilla</h1>
+  <p>Un catálogo sencillo de inmuebles en venta en Frómista: casco urbano, huertas y tierras de labor, a un paso del Camino de Santiago y de la Iglesia de San Martín de Tours.</p>
+  <div class="hero-canal-line"></div>
+</section>
+
+<section class="pueblo-section" id="pueblo">
+
+  <div class="pueblo-intro">
+    <span class="hero-eyebrow">Sobre Frómista</span>
+    <h2>Un pueblo del Camino, marcado por el agua</h2>
+    <p>Frómista es una villa tranquila de la Tierra de Campos palentina, conocida por su iglesia románica y por ser el único tramo navegable de todo el Camino de Santiago Francés. Un lugar donde el ritmo lo sigue marcando el paso de las esclusas, no el tráfico.</p>
+  </div>
+
+  <div class="facts-strip">
+    <div><div class="fact-label">Provincia</div><div class="fact-value">Palencia, Castilla y León</div></div>
+    <div><div class="fact-label">Comarca</div><div class="fact-value">Tierra de Campos</div></div>
+    <div><div class="fact-label">Distancia a Palencia capital</div><div class="fact-value">32 km</div></div>
+    <div><div class="fact-label">Población</div><div class="fact-value">≈ 730 habitantes</div></div>
+    <div><div class="fact-label">Ruta</div><div class="fact-value">Camino de Santiago Francés</div></div>
+  </div>
+
+  <div class="pueblo-row">
+    <div class="pueblo-img">
+      <img src="images/pueblo-iglesia.jpg" alt="Iglesia de San Martín de Tours, Frómista"
+           onerror="this.src='https://placehold.co/640x480/8B8175/EDE4D3?text=Iglesia+de+San+Mart%C3%ADn'">
+      <span class="photo-credit">Foto: [tu nombre / autor y licencia si es de un banco de imágenes]</span>
+    </div>
+    <div class="pueblo-text">
+      <span class="eyebrow">Patrimonio</span>
+      <h3>La iglesia de San Martín de Tours</h3>
+      <p>Levantada a partir de 1066 sobre el testamento de la reina Doña Mayor, es uno de los templos románicos más completos y puros de toda Europa. Fue reconstruida a comienzos del siglo XX conservando su trazado original: tres naves, ábsides semicirculares y una ornamentación de capiteles que sigue asombrando a quien la visita. El resto del casco urbano acompaña con la iglesia gótica de San Pedro, la de Santa María del Castillo y la arquitectura tradicional de adobe y tapial propia de Tierra de Campos.</p>
+    </div>
+  </div>
+
+  <div class="pueblo-row reverse">
+    <div class="pueblo-img">
+      <img src="images/pueblo-esclusas.jpg" alt="Esclusas del Canal de Castilla en Frómista"
+           onerror="this.src='https://placehold.co/640x480/8B8175/EDE4D3?text=Esclusas+del+Canal'">
+      <span class="photo-credit">Foto: [tu nombre / autor y licencia si es de un banco de imágenes]</span>
+    </div>
+    <div class="pueblo-text">
+      <span class="eyebrow">El canal</span>
+      <h3>Las esclusas del Canal de Castilla</h3>
+      <p>El Canal llegó a Frómista en 1773 y dejó el mayor desnivel salvado de toda su red: una esclusa cuádruple que hoy se puede recorrer a pie por el paseo arbolado que la bordea. Es, además, el único tramo navegable del Camino Francés: el barco turístico Juan de Homar recorre el cauce entre chopos, patos y el rumor constante del agua.</p>
+    </div>
+  </div>
+
+  <div class="pueblo-row">
+    <div class="pueblo-img">
+      <img src="images/pueblo-gastronomia.jpg" alt="Gastronomía de Frómista y Tierra de Campos"
+           onerror="this.src='https://placehold.co/640x480/8B8175/EDE4D3?text=Gastronom%C3%ADa+local'">
+      <span class="photo-credit">Foto: [tu nombre / autor y licencia si es de un banco de imágenes]</span>
+    </div>
+    <div class="pueblo-text">
+      <span class="eyebrow">Gastronomía</span>
+      <h3>Mesa de Tierra de Campos</h3>
+      <p>El lechazo asado de raza churra, cocinado en cazuela de barro y horno de leña, es la referencia de la zona, junto a los quesos artesanos de oveja de curación larga. La menestra palentina, la sopa de ajo y los productos de la matanza —morcilla, tocino— completan una mesa sencilla y honesta, con la repostería local de rosquillas y magdalenas como cierre.</p>
+    </div>
+  </div>
+
+  <p class="pueblo-quote">"Aquí el reloj lo lleva el agua al pasar por la esclusa, y el pueblo, sin prisa, aprende a esperar con ella."</p>
+
+  <div class="pueblo-cta">
+    <a class="btn btn-outline" href="#catalogo">Ver casas y fincas disponibles ↓</a>
+  </div>
+
+</section>
+
+<section class="route-section" id="catalogo">
+  <span class="eyebrow">Catálogo — ordenado por distancia a la plaza</span>
+  <div class="route-strip"></div>
+  <div class="cards-grid" id="cardsGrid"></div>
+</section>
+
+<div class="modal hidden" id="detailModal">
+  <div class="modal-card" id="modalContent"></div>
+</div>
+
+<section class="contact" id="contacto">
+  <span class="hero-eyebrow" style="color:var(--wheat)">Contacto</span>
+  <h2>Escríbenos sobre cualquier inmueble</h2>
+  <div class="contact-grid">
+    <form id="contactForm">
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="tel" name="telefono" placeholder="Teléfono (opcional)">
+      <input type="text" name="inmueble" id="inmuebleField" placeholder="Inmueble de interés (opcional)">
+      <textarea name="mensaje" rows="4" placeholder="Cuéntanos qué buscas" required></textarea>
+      <button class="btn" type="submit">Enviar mensaje</button>
+      <div class="form-status" id="formStatus"></div>
+    </form>
+    <div class="direct-contact">
+      <a href="tel:+34600000000">📞 +34 600 000 000</a>
+      <a href="https://wa.me/34600000000" target="_blank" rel="noopener">💬 WhatsApp directo</a>
+      <a href="mailto:info@fincasdelcanal.es">✉️ info@fincasdelcanal.es</a>
+    </div>
+  </div>
+</section>
+
+<footer>Fincas del Canal — Frómista, Palencia</footer>
+
+<script>
+/* =========================================================
+   DATOS DE LOS INMUEBLES
+   Añade, edita o borra objetos de este array para actualizar el catálogo.
+   - fotos: nombres de archivo dentro de la carpeta /images
+   - lat/lng: coordenadas exactas del inmueble (para el mapa)
+   - km: distancia orientativa a la Iglesia de San Martín (referencia del pueblo)
+========================================================= */
+const properties = [
+  {
+    id: "casa-canal-1",
+    tipo: "Casa",
+    titulo: "Casa de piedra junto al Canal de Castilla",
+    km: "0.3 km",
+    precio: "89.000 €",
+    m2: "160 m²",
+    habitaciones: "3 hab.",
+    descripcion: "Casa tradicional de dos plantas a orillas del Canal de Castilla, a pocos minutos a pie de la Iglesia de San Martín de Tours. Fachada en piedra, patio trasero y posibilidad de reforma para uso como vivienda habitual o casa rural, aprovechando el paso del Camino de Santiago.",
+    lat: 42.2672,
+    lng: -4.4021,
+    fotos: ["casa-canal-1.jpg", "casa-canal-2.jpg", "casa-canal-3.jpg"]
+  },
+  {
+    id: "terreno-tierra-campos",
+    tipo: "Terreno rústico",
+    titulo: "Finca de labor en Tierra de Campos",
+    km: "1.8 km",
+    precio: "34.500 €",
+    m2: "2,4 ha",
+    habitaciones: "—",
+    descripcion: "Parcela de secano en las afueras de Frómista, suelo de labor de buena calidad típico de Tierra de Campos. Acceso directo por camino agrícola, apta para cereal o para proyectos de huerta. Buena orientación y sin cargas.",
+    lat: 42.2601,
+    lng: -4.4187,
+    fotos: ["terreno-1.jpg", "terreno-2.jpg"]
+  },
+  {
+    id: "casa-huerta-plaza",
+    tipo: "Casa con huerta",
+    titulo: "Casa con huerta cerca de la Plaza Mayor",
+    km: "0.6 km",
+    precio: "62.000 €",
+    m2: "110 m² + 300 m² huerta",
+    habitaciones: "2 hab.",
+    descripcion: "Vivienda de una planta en el casco urbano, a un paseo corto de la Plaza Mayor, con huerta trasera orientada al sur. Ideal como segunda residencia o proyecto de reforma integral. Buena conexión con la N-611 y la estación de Frómista.",
+    lat: 42.2679,
+    lng: -4.4048,
+    fotos: ["huerta-1.jpg", "huerta-2.jpg", "huerta-3.jpg"]
+  },
+  {
+    id: "solar-urbano-casco",
+    tipo: "Solar urbano",
+    titulo: "Solar edificable en el casco, cerca de la Plaza de Tuy",
+    km: "0.4 km",
+    precio: "28.000 €",
+    m2: "180 m²",
+    habitaciones: "Edificable PB+1",
+    descripcion: "Solar urbano consolidado con todos los servicios (agua, luz, saneamiento) a pie de calle, a un paseo corto de la Plaza de Tuy. Calificación que permite planta baja más una altura. Buena opción para autopromoción o para inversor que quiera construir para alquiler o venta.",
+    lat: 42.2683,
+    lng: -4.4044,
+    fotos: ["solar-1.jpg", "solar-2.jpg"]
+  },
+  {
+    id: "chopera-canal",
+    tipo: "Terreno con chopera",
+    titulo: "Parcela con chopera junto al Canal de Castilla",
+    km: "1.0 km",
+    precio: "22.000 €",
+    m2: "1,1 ha",
+    habitaciones: "—",
+    descripcion: "Parcela plantada de chopos junto al cauce del Canal de Castilla, con acceso por camino rural. Explotación forestal habitual en Tierra de Campos, con turno de corta a medio plazo. También válida como reserva de suelo junto al agua para un uso futuro distinto.",
+    lat: 42.2712,
+    lng: -4.4095,
+    fotos: ["chopera-1.jpg", "chopera-2.jpg"]
+  },
+  {
+    id: "finca-regadio",
+    tipo: "Terreno de regadío",
+    titulo: "Finca de regadío con derechos de agua del canal",
+    km: "1.4 km",
+    precio: "48.000 €",
+    m2: "1,8 ha",
+    habitaciones: "—",
+    descripcion: "Finca de regadío con derechos de agua vinculados a las acequias del Canal de Castilla, tierra de buena calidad para cultivos de huerta o forraje. Parcela regular, de fácil laboreo, con acceso directo desde camino agrícola asfaltado.",
+    lat: 42.2648,
+    lng: -4.4142,
+    fotos: ["regadio-1.jpg", "regadio-2.jpg"]
+  }
+];
+
+/* =========================================================
+   RENDERIZADO DEL CATÁLOGO
+========================================================= */
+const grid = document.getElementById('cardsGrid');
+
+function renderCards(){
+  grid.innerHTML = properties.map(p => `
+    <div class="card" data-id="${p.id}">
+      <img class="card-photo" src="images/${p.fotos[0]}" alt="${p.titulo}"
+           onerror="this.src='https://placehold.co/480x360/8B8175/EDE4D3?text=Añade+tu+foto'">
+      <div class="card-body">
+        <span class="tag">${p.tipo}</span>
+        <div class="card-km mono">${p.km} de la Iglesia de San Martín</div>
+        <div class="card-title">${p.titulo}</div>
+        <div class="card-meta">
+          <span>${p.m2}</span><span>${p.habitaciones}</span>
+        </div>
+        <div class="card-price">${p.precio}</div>
+      </div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => openDetail(card.dataset.id));
+  });
+}
+
+/* =========================================================
+   MODAL DE DETALLE
+========================================================= */
+const modal = document.getElementById('detailModal');
+const modalContent = document.getElementById('modalContent');
+
+function openDetail(id){
+  const p = properties.find(x => x.id === id);
+  if(!p) return;
+
+  const galleryHtml = p.fotos.map(f => `
+    <img src="images/${f}" alt="${p.titulo}"
+         onerror="this.src='https://placehold.co/300x220/8B8175/EDE4D3?text=Foto'">
+  `).join('');
+
+  const mapSrc = `https://www.google.com/maps?q=${p.lat},${p.lng}&z=16&output=embed`;
+
+  modalContent.innerHTML = `
+    <button class="modal-close" aria-label="Cerrar" onclick="closeDetail()">×</button>
+    <span class="tag">${p.tipo}</span>
+    <h2>${p.titulo}</h2>
+    <div class="modal-specs">
+      <div>Precio<span>${p.precio}</span></div>
+      <div>Superficie<span>${p.m2}</span></div>
+      <div>Distribución<span>${p.habitaciones}</span></div>
+      <div>Ubicación<span>${p.km} de la iglesia</span></div>
+    </div>
+    <div class="gallery">${galleryHtml}</div>
+    <p>${p.descripcion}</p>
+    <iframe class="modal-map" src="${mapSrc}" loading="lazy"></iframe>
+    <a class="btn" href="#contacto" onclick="prefillContact('${p.titulo.replace(/'/g, "\\'")}')">Preguntar por este inmueble</a>
+  `;
+  modal.classList.remove('hidden');
+}
+
+function closeDetail(){
+  modal.classList.add('hidden');
+}
+modal.addEventListener('click', e => { if(e.target === modal) closeDetail(); });
+
+function prefillContact(titulo){
+  closeDetail();
+  document.getElementById('inmuebleField').value = titulo;
+}
+
+/* =========================================================
+   FORMULARIO DE CONTACTO
+   Sustituye YOUR_FORM_ID por el ID que te da Formspree (gratis, ver instrucciones).
+   Si no configuras Formspree, el formulario seguirá guardando el mensaje
+   en el enlace mailto de más abajo como alternativa.
+========================================================= */
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+
+const form = document.getElementById('contactForm');
+const status = document.getElementById('formStatus');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  status.textContent = "Enviando...";
+  const data = new FormData(form);
+
+  if(FORMSPREE_ENDPOINT.includes("YOUR_FORM_ID")){
+    status.textContent = "Formulario aún no conectado. Escríbenos por WhatsApp o email mientras tanto.";
+    return;
+  }
+
+  try{
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      headers: { "Accept": "application/json" },
+      body: data
+    });
+    if(res.ok){
+      status.textContent = "Mensaje enviado. Te contestaremos en breve.";
+      form.reset();
+    } else {
+      status.textContent = "No se pudo enviar. Prueba por WhatsApp o email.";
+    }
+  } catch(err){
+    status.textContent = "No se pudo enviar. Prueba por WhatsApp o email.";
+  }
+});
+
+renderCards();
+</script>
+
+</body>
+</html>
