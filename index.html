@@ -7,6 +7,7 @@
 <meta name="description" content="Casas y terrenos en venta en Frómista, Palencia. Junto al Canal de Castilla y el Camino de Santiago.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <style>
   :root{
     --cream:#EDE4D3;
@@ -398,13 +399,10 @@
 
 <script>
 /* =========================================================
-   DATOS DE LOS INMUEBLES
-   Añade, edita o borra objetos de este array para actualizar el catálogo.
-   - fotos: nombres de archivo dentro de la carpeta /images
-   - lat/lng: coordenadas exactas del inmueble (para el mapa)
-   - km: distancia orientativa a la Iglesia de San Martín (referencia del pueblo)
+   DATOS DE RESPALDO (se usan solo si no has conectado tu Google Sheet,
+   o si falla la conexión). Sirven de ejemplo / demo.
 ========================================================= */
-const properties = [
+let properties = [
   {
     id: "casa-canal-1",
     tipo: "Casa",
@@ -484,6 +482,78 @@ const properties = [
     fotos: ["regadio-1.jpg", "regadio-2.jpg"]
   }
 ];
+
+/* =========================================================
+   CATÁLOGO EDITABLE DESDE GOOGLE SHEETS (sin tocar código)
+   ---------------------------------------------------------
+   1. Crea un Google Form o Google Sheet con las columnas exactas indicadas
+      en el README (Tipo, Título, Precio, Superficie, Distribución,
+      Descripción, Coordenadas, Fotos).
+   2. En el Sheet: Archivo > Compartir > Publicar en la Web > formato CSV.
+   3. Pega aquí abajo la URL que te da Google (sustituye el texto de ejemplo).
+========================================================= */
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcQZxO_nWWQCA4fEJQL2kU0g4geM6wHqWu1AViVvqcgo4e-BpE1lsSwFYTECoomCRmEXBovQk8_yzV/pub?output=csv";
+
+// Coordenadas de la Iglesia de San Martín, usadas como referencia (km 0)
+const CHURCH_COORDS = { lat: 42.2672, lng: -4.4021 };
+
+function distanceKm(lat, lng){
+  const toRad = deg => deg * Math.PI / 180;
+  const R = 6371;
+  const dLat = toRad(lat - CHURCH_COORDS.lat);
+  const dLng = toRad(lng - CHURCH_COORDS.lng);
+  const a = Math.sin(dLat/2)**2 +
+            Math.cos(toRad(CHURCH_COORDS.lat)) * Math.cos(toRad(lat)) *
+            Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function slugify(text){
+  return (text || "inmueble")
+    .toString().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+function rowToProperty(row, index){
+  // Coordenadas: espera el texto "lat, lng" (ej: 42.2672, -4.4021)
+  let lat = CHURCH_COORDS.lat, lng = CHURCH_COORDS.lng;
+  const coordsRaw = (row["Coordenadas"] || "").split(",");
+  if(coordsRaw.length === 2){
+    const parsedLat = parseFloat(coordsRaw[0]);
+    const parsedLng = parseFloat(coordsRaw[1]);
+    if(!isNaN(parsedLat) && !isNaN(parsedLng)){ lat = parsedLat; lng = parsedLng; }
+  }
+  return {
+    id: `${slugify(row["Título"])}-${index}`,
+    tipo: row["Tipo"] || "Inmueble",
+    titulo: row["Título"] || "Sin título",
+    km: `${distanceKm(lat, lng).toFixed(1)} km`,
+    precio: row["Precio"] || "Consultar precio",
+    m2: row["Superficie"] || "—",
+    habitaciones: row["Distribución"] || "—",
+    descripcion: row["Descripción"] || "",
+    lat, lng,
+    fotos: (row["Fotos"] || "").split(",").map(f => f.trim()).filter(Boolean)
+  };
+}
+
+async function loadProperties(){
+  if(SHEET_CSV_URL.includes("PASTE_YOUR")){
+    return; // aún no conectado: se quedan los datos de respaldo de ejemplo
+  }
+  try{
+    const res = await fetch(SHEET_CSV_URL);
+    const csvText = await res.text();
+    const parsed = Papa.parse(csvText, { header: true, skipEmptyLines: true });
+    if(parsed.data.length){
+      properties = parsed.data.map((row, i) => rowToProperty(row, i));
+    }
+  }catch(err){
+    console.error("No se pudo cargar el catálogo desde Google Sheets, se muestran los datos de ejemplo.", err);
+  }
+}
 
 /* =========================================================
    RENDERIZADO DEL CATÁLOGO
@@ -595,7 +665,10 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-renderCards();
+(async function init(){
+  await loadProperties();
+  renderCards();
+})();
 </script>
 
 </body>
